@@ -247,3 +247,5 @@ terraform.rc
 # VS Code directory
 .vscode/
 packages/
+lambda_function.zip
+src/requirements.txt
