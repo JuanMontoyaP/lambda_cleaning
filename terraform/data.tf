@@ -21,4 +21,15 @@ data "aws_iam_policy_document" "lambda_execution_policy" {
 
     resources = [aws_sns_topic.runtime_alerts.arn]
   }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+
+    resources = ["${aws_cloudwatch_log_group.lambda_logs.arn}:log-stream:*"]
+  }
 }

@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "cleaner" {
-  function_name    = "lambda_cleaner"
+  function_name    = local.lambda_name
   filename         = "${path.module}/../lambda_function.zip"
   source_code_hash = filebase64sha256("${path.module}/../lambda_function.zip")
   handler          = "main.lambda_handler"
@@ -11,4 +11,6 @@ resource "aws_lambda_function" "cleaner" {
       SNS_TOPIC_ARN = aws_sns_topic.runtime_alerts.arn
     }
   }
+
+  depends_on = [aws_cloudwatch_log_group.lambda_logs]
 }
