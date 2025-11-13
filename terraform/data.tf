@@ -10,3 +10,15 @@ data "aws_iam_policy_document" "lambda_trust_policy" {
     actions = ["sts:AssumeRole"]
   }
 }
+
+data "aws_iam_policy_document" "lambda_execution_policy" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "sns:Publish"
+    ]
+
+    resources = [aws_sns_topic.runtime_alerts.arn]
+  }
+}

@@ -16,8 +16,8 @@ build:
 
 zip: build
 	cd src && \
-	zip -r ../lambda_function.zip packages && \
-	zip ../lambda_function.zip main.py
+	zip -qr ../lambda_function.zip packages && \
+	zip -q ../lambda_function.zip main.py
 
 deploy: clean zip
 	cd terraform && \
