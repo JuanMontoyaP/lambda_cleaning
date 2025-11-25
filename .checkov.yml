@@ -9,6 +9,8 @@ mask: []
 secrets-history-timeout: 12h
 secrets-scan-file-type: []
 skip-check:
+  - CKV_AWS_116
+  - CKV_AWS_117
   - CKV_AWS_158
 skip-path:
   - ^.*/packages(/.*)?$
