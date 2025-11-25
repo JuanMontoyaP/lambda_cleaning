@@ -1,12 +1,13 @@
 ---
 metadata:
-  name: "Check that all resources are tagged with the key - Project"
+  name: "Check that default tags include 'Project'"
   id: "CKV_AWS_C1"
   category: "GENERAL_SECURITY"
 scope:
   provider: aws
 definition:
   cond_type: "attribute"
-  resource_types: "taggable"
-  attribute: "tags.Project"
+  resource_types:
+    - "aws_default_tags"
+  attribute: "default_tags.tags.Project"
   operator: "exists"
