@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   checkov_scan:
+    permissions:
+      security-events: write
     name: "Checkov Scan"
     runs-on: ubuntu-latest
 
