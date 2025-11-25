@@ -15,9 +15,6 @@ jobs:
   build-lambda-ec2_code:
     name: "Build and Test Lambda EC2 Code"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/lambda_ec2
 
     steps:
       - uses: actions/checkout@v5
