@@ -1,0 +1,13 @@
+---
+metadata:
+  name: "Ensure CloudWatch log groups retains logs for less than 8 days"
+  id: "CKV_AWS_C2"
+  category: "LOGGING"
+  severity: "MEDIUM"
+definition:
+  cond_type: "attribute"
+  resource_types:
+    - aws_cloudwatch_log_group
+  attribute: retention_in_days
+  operator: "less_than"
+  value: 8
