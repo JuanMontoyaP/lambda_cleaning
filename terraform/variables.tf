@@ -4,7 +4,6 @@ variable "aws_region" {
   default     = "us-west-1"
 }
 
-
 variable "alert_email" {
   description = "Email to send alerts to"
   type        = string

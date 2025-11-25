@@ -1,4 +1,4 @@
-.PHONY: help build zip lock tests clean deploy
+.PHONY: help build zip lock tests clean plan deploy
 
 # Configuration
 LAMBDA_FOLDER?=src/lambda_ec2
@@ -17,7 +17,7 @@ tests: lock ## Run tests
 	@cd $(LAMBDA_FOLDER) && uv run pytest -vv
 
 clean: ## Remove build artifacts
-	rm -rf $(LAMBDA_FOLDER)/packages $(ZIP_OUTPUT) $(LAMBDA_FOLDER)/requirements.txt
+	rm -rf $(LAMBDA_FOLDER)/packages $(ZIP_OUTPUT)
 
 build: clean tests ## Build Lambda deployment package
 	@cd $(LAMBDA_FOLDER) && \
@@ -35,6 +35,11 @@ zip: build ## Create deployment ZIP archive
 	@cd $(LAMBDA_FOLDER)/ && \
 	zip -qr ../../$(ZIP_OUTPUT) packages/ && \
 	zip -q ../../$(ZIP_OUTPUT) main.py
+
+plan: zip ## Show Terraform plan
+	@cd $(TERRAFORM_DIR) && \
+	terraform init && \
+	terraform plan
 
 deploy: zip ## Deploy to AWS via Terraform
 	@cd $(TERRAFORM_DIR) && \

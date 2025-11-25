@@ -32,3 +32,43 @@ jobs:
         if: always()
         with:
           sarif_file: results.sarif
+
+  terraform:
+    name: "Terraform Validate and Plan"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    env:
+      AWS_REGION: us-west-1
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: GitHubActions_tf_labs
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.0
+
+      - name: Terraform format check
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: tf_plan
+        run: terraform plan -input=false
